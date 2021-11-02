@@ -1,4 +1,6 @@
-@import './Assets/scss/colors.scss';
-
-body {
+@import "./Assets/scss/colors.scss";
+.open-button {
+  background-color: #000;
+  color: green;
+  border-color: green;
 }

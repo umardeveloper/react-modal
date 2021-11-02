@@ -1,48 +1,31 @@
-import React from 'react';
-import './App.scss';
-
-import Todo from './Components/Todo/Todo';
+import React from "react";
+import Modal from "./Components/Modal/Modal";
+import "./App.scss";
 
 function App() {
-	const [todos, setTodos] = React.useState([
-		{ id: 0, title: 'Code yozdim', isCompleted: false },
-		{ id: 1, title: 'Code yozmadim', isCompleted: true },
-	]);
+  const elModal = React.useRef();
 
-	const handleDelete = (evt) => {
-		const todoId = evt.target.dataset.todoId - 0;
+  return (
+    <>
+      <main
+        onKeyDown={(evt) => {
+          if (evt.code === "Escape") {
+            elModal.current.classList.remove("modal--show");
+          }
+        }}
+      >
+        <button
+          className="open-button"
+          onClick={() => {
+            elModal.current.classList.add("modal--show");
+          }}
+        >
+          Modal Open
+        </button>
 
-		const filteredTodos = todos.filter((row) => row.id !== todoId);
-		setTodos([...filteredTodos]);
-	};
-
-	return (
-		<>
-			<input
-				onKeyUp={(evt) => {
-					if (evt.code === 'Enter') {
-						const newTodo = {
-							id: todos[todos.length - 1]?.id + 1 || 0,
-							title: evt.target.value,
-							isCompleted: false,
-						};
-
-						setTodos([...todos, newTodo]);
-					}
-				}}
-				type='text'
-				placeholder='todo...'
-			/>
-
-			<ul>
-				{todos.map((row) => (
-					<Todo key={row.id} id={row.id} handleDelete={handleDelete}>
-						{row.title}
-					</Todo>
-				))}
-			</ul>
-		</>
-	);
+        <Modal elModal={elModal} />
+      </main>
+    </>
+  );
 }
-
 export default App;
